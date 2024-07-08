@@ -1407,7 +1407,6 @@
                     value : value
                 },
                 success: function (data) {
-                    console.log(data)
                     if(data.status == true && name == 'delivery_date') {
                         toastr.success('{{\App\CentralLogics\translate("Delivery date changed successfully")}}', {
                             CloseButton: true,
@@ -1440,7 +1439,6 @@
                 type: "GET",
                 url: '{{url('/')}}/admin/orders/verify-offline-payment/{{$order['id']}}/' + status,
                 success: function (data) {
-                    //console.log(data);
                     location.reload();
                     if(data.status == true) {
                         toastr.success('{{ translate("offline payment verify status changed") }}', {
@@ -1526,12 +1524,9 @@
                     });
 
                     // Log the search term and filtered deliveries to console
-                    console.log("Search Term:", searchTerm);
-                    console.log("Filtered Deliveries:", filteredDeliveries);
 
                     $(".listDelivery").empty(); // Clear previous results
                     if(filteredDeliveries.length === 0){
-                        console.log("NOT FOUND");
                         let NotFound = `<li class="d-flex align-items-center justify-content-center">
                             <span class="notFound">Not Found</span>
                             </li>`;
