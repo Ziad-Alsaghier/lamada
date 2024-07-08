@@ -1020,7 +1020,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group">
+                    <div class="searchDelivery">
+                        <button type="button" class="btn">
+                            <i class="tio-search"></i>
+                        </button>
+                        <input type="text" class="js-form-search form-control form--control" id="searchAssignDelivery" placeholder="Search Assign Delivery">
+                    </div>
+                    <ul class="list-group listDelivery">
                         @foreach($delivery_man as $deliveryMan)
                         <li class="list-group-item d-flex flex-wrap align-items-center gap-3 justify-content-between">
                             <div class="media align-items-center gap-2 flex-wrap">
@@ -1037,6 +1043,7 @@
                         </li>
                         @endforeach
                     </ul>
+                    {{-- <ul id="filteredDeliveriesList"></ul> --}}
                 </div>
             </div>
         </div>
@@ -1494,21 +1501,68 @@
     </script>
 
     <script>
-        $.ajax({
-                type: "GET",
-                url:"{{ route('admin.orders.filter_delivery')}}",
-                data:{
-                    'id':{{ $order->id }},
-                },
-                success: function (response) {
-                    console.log(response);
-                
+       $.ajax({
+            type: "GET",
+            url: "{{ route('admin.orders.filter_delivery')}}",
+            data: {
+                'id': {{ $order->id }},
+            },
+            success: function (response) {
+                let all_Delivery = response.delivery_man;
+                let all_Delivery_name = [];
 
-                },
-                error: function () {
-                 alert('error');
+                // Extract delivery names into all_Delivery_name array
+                $(all_Delivery).each((index, delivery) => {
+                    all_Delivery_name.push(delivery.f_name);
+                });
+
+                // Event listener for keyup on #searchAssignDelivery input
+                $("#searchAssignDelivery").on("keyup", function() {
+                    let searchTerm = $(this).val().toLowerCase(); // Get the value of the input and convert to lowercase
+
+                    const filteredDeliveries = all_Delivery.filter(function(Delivery) {
+                        // Convert the delivery name to lowercase for case-insensitive comparison
+                            return Delivery.f_name.includes(searchTerm);
+                    });
+
+                    // Log the search term and filtered deliveries to console
+                    console.log("Search Term:", searchTerm);
+                    console.log("Filtered Deliveries:", filteredDeliveries);
+
+                    $(".listDelivery").empty(); // Clear previous results
+                    if(filteredDeliveries.length === 0){
+                        console.log("NOT FOUND");
+                        let NotFound = `<li class="d-flex align-items-center justify-content-center">
+                            <span class="notFound">Not Found</span>
+                            </li>`;
+                        $(".listDelivery").append(NotFound);
+                    }else{
+
+                    
+                    filteredDeliveries.forEach(function(delivery) {
+                        let theDelivery = `<li class="list-group-item d-flex flex-wrap align-items-center gap-3 justify-content-between">
+                            <div class="media align-items-center gap-2 flex-wrap">
+                                <div class="avatar">
+                                    <img class="img-fit rounded-circle" loading="lazy" decoding="async"
+
+                                        src="/storage/app/public/delivery-man/${delivery.image}"
+                                        alt="Jhon Doe">
+                                </div>
+                                <span>${delivery.f_name}</span>
+                            </div>
+                            <a id="${delivery.id}" onclick="addDeliveryMan(${delivery.id})"
+                                class="btn btn-primary btn-sm">{{translate('Assign')}}</a>
+                        </li>`;
+                        $(".listDelivery").append(theDelivery);
+                    });
                 }
-            });
+                });
+            },
+            error: function () {
+                alert('Error fetching data.'); // Handle error if AJAX request fails
+            }
+        });
+
     </script>
 
     @endpush
