@@ -12,4 +12,9 @@ class Country extends Model
      'country',
      'status'
      ];
+
+     public function cities(){
+     return $this->hasMany(City::class);
+     }
+
 }

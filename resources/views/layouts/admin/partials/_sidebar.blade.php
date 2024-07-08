@@ -1021,8 +1021,7 @@
 
                             <li
                                 class="nav-item {{Request::is('admin/business-settings/web-app/third-party/fcm*')?'active':''}}">
-                                <a class="nav-link"
-                                    href="{{route('admin.business-settings.web-app.third-party.fcm-index')}}">
+                                <a class="nav-link" href="{{route('admin.sup_zone_list')}}">
                                     <span class="tio-circle nav-indicator-icon"></span>
                                     <span
                                         class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{translate('City')}}</span>

@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\OfflinePaymentMethodController;
-use App\Http\Controllers\Admin\zone\CountryZoneController;
 use App\Http\Controllers\Admin\ZoneController;
+use App\Http\Controllers\Admin\zone\SubZoneController;
+use App\Http\Controllers\Admin\zone\CountryZoneController;
+use App\Http\Controllers\Admin\OfflinePaymentMethodController;
 
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::get('lang/{locale}', 'LanguageController@lang')->name('lang');
@@ -45,14 +46,22 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('change-status/{id}', 'CustomRoleController@status_change')->name('change-status');
         });
         Route::prefix('zone')->controller(ZoneController::class)->group(function () {
-            Route::get('City','index')->name('zone-list');
+            Route::get('zone','index')->name('zone-list');
+            Route::get('Sup_Zone','sup_zone_list')->name('sup_zone_list');
         });// View Zone Controller
 
         // Start Zone Process
-        Route::prefix('zone')->controller(CountryZoneController::class)->group(function () {
+        Route::prefix('zone_process')->controller(CountryZoneController::class)->group(function () {
 
-            Route::post('countryZone','stor_country')->name('zone-list');
+            Route::post('countryZone','store_country')->name('new_zone_process');
             Route::get('status_country/{id}/{status}','status_country')->name('status_country');
+            Route::get('zone_delete/{id}','zone_delete')->name('zone_delete');
+        });
+        Route::prefix('sup_zone')->controller(SubZoneController::class)->group(function () {
+
+            Route::post('SupZone','store_sup_zone')->name('new_sup_zone_process');
+            Route::get('status_sup_zone/{id}/{status}','status_sup_zone')->name('status_sup_zone');
+            Route::get('zone_delete/{id}','sup_zone_delete')->name('sup_zone_delete');
         });
 
 

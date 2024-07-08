@@ -123,6 +123,10 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
             Route::post('guest-track', 'OrderController@guset_track_order')->withoutMiddleware(['auth:api', 'is_active']);
             Route::post('details-guest', 'OrderController@get_guest_order_details')->withoutMiddleware(['auth:api', 'is_active']);
         });
+        Route::group(['prefix' => 'location'], function () {
+            Route::get('sup_zone', 'ZoneController@get_sup_zone')->withoutMiddleware(['auth:api', 'is_active']);
+    
+        });
         // Chatting
         Route::group(['prefix' => 'message'], function () {
             //customer-admin

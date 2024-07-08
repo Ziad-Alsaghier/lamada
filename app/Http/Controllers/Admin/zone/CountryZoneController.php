@@ -14,7 +14,7 @@ class CountryZoneController extends Controller
     ]; 
   // This Controller About All Process Country Zone
 
-  public function stor_country(Request $request){
+  public function store_country(Request $request){
         $request->validate([
             'country'=>['required','unique:countries','min:5'],
         ]);
@@ -33,6 +33,14 @@ class CountryZoneController extends Controller
 
     if($country){
             session()->flash('success','Status Country Updated Successfully');
+            return redirect()->back();
+    }
+  }
+  public function zone_delete($id){
+    $country = Country::where('id', $id);
+    if($country){
+       $country->delete();
+            session()->flash('success','Status Country Deleted Successfully');
             return redirect()->back();
     }
   }
