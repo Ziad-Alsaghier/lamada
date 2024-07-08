@@ -1544,9 +1544,10 @@
                             <div class="media align-items-center gap-2 flex-wrap">
                                 <div class="avatar">
                                     <img class="img-fit rounded-circle" loading="lazy" decoding="async"
-
+                                        onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
                                         src="/storage/app/public/delivery-man/${delivery.image}"
                                         alt="Jhon Doe">
+                                        
                                 </div>
                                 <span>${delivery.f_name}</span>
                             </div>
