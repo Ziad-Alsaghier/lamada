@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required Meta Tags Always Come First -->
     <meta charset="utf-8">
@@ -24,40 +25,43 @@
 
 <body>
 
-<!-- Content -->
-<div class="container">
-    <div class="footer-height-offset d-flex justify-content-center align-items-center flex-column">
-        <div class="row align-items-sm-center w-100">
-            <div class="col-sm-6">
-                <div class="text-center text-sm-right mr-sm-4 mb-5 mb-sm-0">
-                    <img class="w-60 w-sm-100 mx-auto" src="{{asset('public/assets/admin')}}/svg/illustrations/think.svg" alt="Image Description" style="max-width: 15rem;">
+    <!-- Content -->
+    <div class="container">
+        <div class="footer-height-offset d-flex justify-content-center align-items-center flex-column">
+            <div class="row align-items-sm-center w-100">
+                <div class="col-sm-6">
+                    <div class="text-center text-sm-right mr-sm-4 mb-5 mb-sm-0">
+                        <img class="w-60 w-sm-100 mx-auto"
+                            src="{{asset('public/assets/admin')}}/svg/illustrations/think.svg" alt="Image Description"
+                            style="max-width: 15rem;">
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4 text-center text-sm-left">
+                    <h1 class="display-1 mb-0">500</h1>
+                    <p class="lead">The server encountered an internal error or misconfiguration and was unable to
+                        complete your request.</p>
+                    <a class="btn btn-primary" href="{{url()->current()}}">Reload page</a>
                 </div>
             </div>
-
-            <div class="col-sm-6 col-md-4 text-center text-sm-left">
-                <h1 class="display-1 mb-0">500</h1>
-                <p class="lead">The server encountered an internal error or misconfiguration and was unable to complete your request.</p>
-                <a class="btn btn-primary" href="{{url()->current()}}">Reload page</a>
-            </div>
+            <!-- End Row -->
         </div>
-        <!-- End Row -->
     </div>
-</div>
-<!-- End Content -->
+    <!-- End Content -->
 
-<!-- Footer -->
-<div class="footer text-center">
-    <ul class="list-inline list-separator">
-        <li class="list-inline-item">
-            <a class="list-separator-link" target="_blank" href="https://6amtech.com/">Efood Support</a>
-        </li>
-    </ul>
-</div>
-<!-- End Footer -->
+    <!-- Footer -->
+    <div class="footer text-center">
+        <ul class="list-inline list-separator">
+            <li class="list-inline-item">
+                <a class="list-separator-link" target="_blank" href="https://6amtech.com/">Efood Support</a>
+            </li>
+        </ul>
+    </div>
+    <!-- End Footer -->
 
 
-<!-- JS Front -->
-<script src="{{asset('public/assets/admin')}}/js/theme.min.js"></script>
+    <!-- JS Front -->
+    <script src="{{asset('public/assets/admin')}}/js/theme.min.js"></script>
 </body>
 
 </html>

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OfflinePaymentMethodController;
+use App\Http\Controllers\Admin\zone\CountryZoneController;
+use App\Http\Controllers\Admin\ZoneController;
 
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::get('lang/{locale}', 'LanguageController@lang')->name('lang');
@@ -31,7 +33,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('/get-restaurant-data', 'SystemController@restaurant_data')->name('get-restaurant-data');
         Route::get('order-statistics', 'DashboardController@order_statistics')->name('order-statistics');
         Route::get('earning-statistics', 'DashboardController@earning_statistics')->name('earning-statistics');
-
+            
 
         Route::group(['prefix' => 'custom-role', 'as' => 'custom-role.', 'middleware' => ['module:user_management']], function () {
             Route::get('create', 'CustomRoleController@create')->name('create');
@@ -42,6 +44,17 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::get('excel-export', 'CustomRoleController@excel_export')->name('excel-export');
             Route::get('change-status/{id}', 'CustomRoleController@status_change')->name('change-status');
         });
+        Route::prefix('zone')->controller(ZoneController::class)->group(function () {
+            Route::get('City','index')->name('zone-list');
+        });// View Zone Controller
+
+        // Start Zone Process
+        Route::prefix('zone')->controller(CountryZoneController::class)->group(function () {
+
+            Route::post('countryZone','stor_country')->name('zone-list');
+            Route::get('status_country/{id}/{status}','status_country')->name('status_country');
+        });
+
 
         Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['module:user_management']], function () {
             Route::get('add-new', 'EmployeeController@add_new')->name('add-new');
