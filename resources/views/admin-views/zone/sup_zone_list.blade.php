@@ -39,13 +39,13 @@
 
 @endif
 <!-- Modal -->
-<a href="#" class="btn btn-primary  m-5" data-toggle="modal" data-target="#addCountry">
-    {{translate('Add New City')}}</a>
-<div class="modal fade" id="addCountry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<a href="#" class="btn btn-primary  m-5" data-toggle="modal" data-target="#addSupZone">
+    {{translate('Add New Sup Zone')}}</a>
+<div class="modal fade" id="addSupZone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5" id="addCountryLabel">{{translate('Assign_Delivery_Man')}}</h4>
+                <h4 class="modal-title fs-5" id="addSupZoneLabel">{{translate('Add New Sup Zone')}}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -54,12 +54,28 @@
                 <ul class="list-group">
                     <li class="list-group-item d-flex flex-wrap align-items-center gap-3 justify-content-between">
                         <div class="form-group col-12 lang_form" id="ar-form">
-                            <form action="{{ route('admin.new_zone_process') }}" method="post">
+                            <form action="{{ route('admin.new_sup_zone_process') }}" method="post">
                                 @csrf
-                                <label class="input-label">Country Name</label>
-                                <input type="text" name="country" class="form-control" placeholder="New Category"
+                                <label class="input-label">sup Zone Name</label>
+                                <input type="text" name="city" class="form-control mb-2" placeholder="New Sup Zone"
                                     maxlength="255" required="" oninvalid="document.getElementById('ar-link').click()">
+                                <label class="input-label">Delivery Fees Zone </label>
+                                <input type="number" name="delivery_fees" class="form-control mt-2"
+                                    placeholder="Enter Delivery Fees Sup Zone" maxlength="255" required=""
+                                    oninvalid="document.getElementById('ar-link').click()">
+
+                                <div class="form-group mt-2">
+                                    <label class="input-label">Zone</label>
+                                    <select name="country_id" id="discount_type" class="form-control">
+                                        <option value="">Zone</option>
+                                        @foreach ($countries as $country )
+                                        <option value="{{ $country->id }}">{{ $country->country }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <button id="" class="btn btn-primary btn-sm mt-5">{{translate('Add')}}</button>
+
                             </form>
 
                         </div>
@@ -78,7 +94,9 @@
             <thead class="thead-light">
                 <tr>
                     <th>{{translate('#')}}</th>
-                    <th>{{translate('City')}}</th>
+                    <th>{{translate('Sup Zone')}}</th>
+                    <th>{{translate('Delivery Fees')}}</th>
+                    <th>{{translate('Zone')}}</th>
                     <th>{{translate('status')}}</th>
                     <th>{{translate('Actions')}}</th>
 
@@ -86,7 +104,7 @@
             </thead>
 
             <tbody id="set-rows">
-                @foreach ($countries as $country )
+                @foreach ($cities as $city )
 
                 <td>
 
@@ -102,14 +120,20 @@
 
 
                 <td class="text-capitalize">
-                    <span class="badge-soft-info px-2 py-1 rounded">{{translate($country->country)}}</span>
+                    <span class="badge-soft-info px-2 py-1 rounded">{{translate($city->city)}}</span>
+                </td>
+                <td class="text-capitalize">
+                    <span class="badge-soft-info px-2 py-1 rounded">{{translate($city->delivery_fees)}}</span>
+                </td>
+                <td class="text-capitalize">
+                    <span class="badge-soft-info px-2 py-1 rounded">{{translate($city->country->country)}}</span>
                 </td>
                 <td>
-                    @if($country->status == '1')
-                    <a href="{{ route('admin.status_country',['id'=>$country->id,'status'=>'0']) }}"
+                    @if($city->status == '1')
+                    <a href="{{ route('admin.status_sup_zone',['id'=>$city->id,'status'=>'0']) }}"
                         class="badge-soft-success px-2 py-1 rounded">Avillable </a>
                     @else
-                    <a href="{{ route('admin.status_country', ['id' => $country->id , 'status' => '1']) }}"
+                    <a href="{{ route('admin.status_sup_zone', ['id' => $city->id , 'status' => '1']) }}"
                         class="badge-soft-danger px-2 py-1 rounded">UnAvillable </a>
                     @endif
                 </td>
@@ -120,6 +144,10 @@
                         </a>
                         <a href="" class="btn btn-sm btn-outline-success square-btn" target="_blank">
                             <i class="tio-print"></i>
+                        </a>
+                        <a href="{{ route('admin.sup_zone_delete',['id'=>$city->id]) }}"
+                            class="btn btn-sm btn-outline-danger square-btn">
+                            <i class="tio-delete"></i>
                         </a>
                     </div>
                 </td>
